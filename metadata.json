@@ -1,5 +1,5 @@
 {
-  "name": "Ignite Tech Solutions Live Reports",
-  "description": "A dynamic, auto-scrolling live report preview board for Ignite Tech Solutions with an admin panel for real-time updates.",
+  "name": "Ignite Tech Solutions - Live Report",
+  "description": "A live reporting board for Ignite Tech Solutions with real-time updates and automatic data cleanup.",
   "requestFramePermissions": []
 }

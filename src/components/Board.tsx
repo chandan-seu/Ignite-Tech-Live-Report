@@ -1,33 +1,27 @@
 import React from 'react';
 import { Entry } from '../types';
 import { EntryItem } from './EntryItem';
-import { useTheme } from '../context/ThemeContext';
 
 interface BoardProps {
   entries: Entry[];
 }
 
 export const Board: React.FC<BoardProps> = ({ entries }) => {
-  const { theme } = useTheme();
   // Duplicate entries to create a seamless infinite scroll effect
   const scrollEntries = [...entries, ...entries, ...entries];
 
   return (
-    <div className={`flex-1 overflow-hidden relative transition-colors duration-300 ${theme === 'dark' ? 'bg-zinc-950' : 'bg-zinc-50'}`}>
+    <div className="flex-1 overflow-hidden relative bg-white dark:bg-zinc-950 transition-colors duration-300">
       {/* Gradient overlays for top and bottom fade */}
-      <div className={`absolute top-0 left-0 right-0 h-32 z-10 pointer-events-none ${
-        theme === 'dark' ? 'bg-gradient-to-b from-zinc-950 to-transparent' : 'bg-gradient-to-b from-zinc-50 to-transparent'
-      }`}></div>
-      <div className={`absolute bottom-0 left-0 right-0 h-32 z-10 pointer-events-none ${
-        theme === 'dark' ? 'bg-gradient-to-t from-zinc-950 to-transparent' : 'bg-gradient-to-t from-zinc-50 to-transparent'
-      }`}></div>
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white dark:from-zinc-950 to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white dark:from-zinc-950 to-transparent z-10 pointer-events-none"></div>
 
       <div className="h-full flex flex-col items-center justify-center py-12 px-8">
         <div className="w-full max-w-5xl h-full overflow-hidden">
           <div 
             className="flex flex-col gap-6 animate-scroll"
             style={{
-              animationDuration: `${entries.length * 4}s`,
+              animationDuration: `${Math.max(entries.length, 1) * 4}s`,
             }}
           >
             {scrollEntries.map((entry, index) => (

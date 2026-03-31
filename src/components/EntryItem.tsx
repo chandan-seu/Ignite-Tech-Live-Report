@@ -1,7 +1,6 @@
 import React from 'react';
 import { Entry } from '../types';
 import { AlertCircle, CheckCircle, Clock } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
 
 interface EntryItemProps {
   entry: Entry;
@@ -9,38 +8,35 @@ interface EntryItemProps {
 }
 
 export const EntryItem: React.FC<EntryItemProps> = ({ entry, className = "" }) => {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
-
   const getStatusStyles = (status: string) => {
     switch (status) {
       case 'App Out':
         return {
-          bg: isDark ? 'bg-emerald-500/10' : 'bg-emerald-50',
-          border: isDark ? 'border-emerald-500/30' : 'border-emerald-200',
-          text: isDark ? 'text-emerald-400' : 'text-emerald-700',
-          icon: <CheckCircle className={`w-6 h-6 ${isDark ? 'text-emerald-500' : 'text-emerald-600'}`} />
+          bg: 'bg-emerald-500/5 dark:bg-emerald-500/10',
+          border: 'border-emerald-500/20 dark:border-emerald-500/30',
+          text: 'text-emerald-600 dark:text-emerald-400',
+          icon: <CheckCircle className="w-6 h-6 text-emerald-500" />
         };
       case 'Declined':
         return {
-          bg: isDark ? 'bg-rose-500/10' : 'bg-rose-50',
-          border: isDark ? 'border-rose-500/30' : 'border-rose-200',
-          text: isDark ? 'text-rose-400' : 'text-rose-700',
-          icon: <AlertCircle className={`w-6 h-6 ${isDark ? 'text-rose-500' : 'text-rose-600'}`} />
+          bg: 'bg-rose-500/5 dark:bg-rose-500/10',
+          border: 'border-rose-500/20 dark:border-rose-500/30',
+          text: 'text-rose-600 dark:text-rose-400',
+          icon: <AlertCircle className="w-6 h-6 text-rose-500" />
         };
       case 'Hold':
         return {
-          bg: isDark ? 'bg-amber-500/10' : 'bg-amber-50',
-          border: isDark ? 'border-amber-500/30' : 'border-amber-200',
-          text: isDark ? 'text-amber-400' : 'text-amber-700',
-          icon: <Clock className={`w-6 h-6 ${isDark ? 'text-amber-500' : 'text-amber-600'}`} />
+          bg: 'bg-amber-500/5 dark:bg-amber-500/10',
+          border: 'border-amber-500/20 dark:border-amber-500/30',
+          text: 'text-amber-600 dark:text-amber-400',
+          icon: <Clock className="w-6 h-6 text-amber-500" />
         };
       default:
         return {
-          bg: isDark ? 'bg-zinc-500/10' : 'bg-zinc-100',
-          border: isDark ? 'border-zinc-500/30' : 'border-zinc-200',
-          text: isDark ? 'text-zinc-400' : 'text-zinc-700',
-          icon: <Clock className={`w-6 h-6 ${isDark ? 'text-zinc-500' : 'text-zinc-600'}`} />
+          bg: 'bg-zinc-500/5 dark:bg-zinc-500/10',
+          border: 'border-zinc-500/20 dark:border-zinc-500/30',
+          text: 'text-zinc-600 dark:text-zinc-400',
+          icon: <Clock className="w-6 h-6 text-zinc-500" />
         };
     }
   };
@@ -48,14 +44,25 @@ export const EntryItem: React.FC<EntryItemProps> = ({ entry, className = "" }) =
   const styles = getStatusStyles(entry.status);
 
   return (
-    <div className={`flex items-center justify-between p-6 rounded-2xl border ${styles.border} ${styles.bg} ${isDark ? 'backdrop-blur-sm' : ''} transition-all duration-300 ${className}`}>
+    <div className={`flex items-center justify-between p-6 rounded-2xl border ${styles.border} ${styles.bg} backdrop-blur-sm transition-all duration-300 ${className}`}>
       <div className="flex items-center gap-6">
         <div className="flex flex-col">
-          <span className={`${isDark ? 'text-zinc-500' : 'text-zinc-400'} text-xs font-mono uppercase tracking-widest mb-1`}>
+          <span className="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-1">
             Phone Number
           </span>
-          <span className={`text-3xl font-bold font-mono ${isDark ? 'text-white' : 'text-zinc-900'} tracking-tighter`}>
+          <span className="text-3xl font-bold font-mono text-zinc-900 dark:text-white tracking-tighter">
             {entry.maskedId}
+          </span>
+        </div>
+
+        <div className="w-px h-12 bg-zinc-200 dark:bg-zinc-800/50 hidden md:block"></div>
+
+        <div className="flex flex-col">
+          <span className="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-1">
+            Agent
+          </span>
+          <span className="text-xl font-bold text-zinc-700 dark:text-zinc-300">
+            {entry.agent}
           </span>
         </div>
       </div>
@@ -69,7 +76,7 @@ export const EntryItem: React.FC<EntryItemProps> = ({ entry, className = "" }) =
             </span>
           </div>
           {entry.status === 'Declined' && entry.reason && (
-            <span className={`${isDark ? 'text-rose-500/70' : 'text-rose-600/80'} text-sm font-medium italic max-w-[200px] text-right`}>
+            <span className="text-rose-500/70 text-sm font-medium italic max-w-[200px] text-right">
               {entry.reason}
             </span>
           )}
